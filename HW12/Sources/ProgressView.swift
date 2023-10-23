@@ -8,6 +8,7 @@
 import UIKit
 
 final class ProgressView: UIView {
+    
     func drawPrograssWork(with percent: CGFloat) {
 
         let circleFrame = UIScreen.main.bounds.width - ( 15 + 40 ) * 2

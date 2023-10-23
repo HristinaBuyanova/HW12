@@ -38,12 +38,9 @@ class ViewController: UIViewController {
 
     private lazy var progressBar: ProgressView = {
         let view = ProgressView()
-//        view.drawPrograss(with: 0.7)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -82,10 +79,10 @@ class ViewController: UIViewController {
             ])
         }
 
-
     // MARK: - Actions
 
-    @objc private func playPausePressed() {
+    @objc 
+    private func playPausePressed() {
         if isStarted {
             timer.invalidate()
             changeImageButtonToPlay()
@@ -97,7 +94,8 @@ class ViewController: UIViewController {
         }
     }
 
-    @objc private func timerCounter() -> Void {
+    @objc 
+    private func timerCounter() -> Void {
 
         if count > 0 && isWorkTime {
             count = count - 1
@@ -147,7 +145,6 @@ class ViewController: UIViewController {
 
     private func configurWork(with duration: Double, progress: Double) {
         timerDuration = duration
-
         let tempCurrentValue = progress > duration ? duration : progress
         let goalValueDevider = duration == 0 ? 1 : duration
         let percent = tempCurrentValue / goalValueDevider
@@ -156,7 +153,6 @@ class ViewController: UIViewController {
 
     private func configurRelax(with duration: Double, progress: Double) {
         timerDuration = duration
-
         let tempCurrentValue = progress > duration ? duration : progress
         let goalValueDevider = duration == 0 ? 1 : duration
         let percent = tempCurrentValue / goalValueDevider

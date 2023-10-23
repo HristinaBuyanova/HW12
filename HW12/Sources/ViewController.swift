@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     private var isWorkTime = true
     private var isStarted = false
     private var timer: Timer = Timer()
+    private var timerProgress: CGFloat = 0
+    private var timerDuration = 0.0
     private var count: Int = 25
 
     private lazy var timeLabel: UILabel = {
@@ -36,7 +38,8 @@ class ViewController: UIViewController {
 
     private lazy var progressBar: ProgressView = {
         let view = ProgressView()
-
+//        view.drawPrograss(with: 0.7)
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -60,6 +63,7 @@ class ViewController: UIViewController {
         view.addSubview(progressBar)
         view.addSubview(timeLabel)
         view.addSubview(playButton)
+        configurWork(with: Double(count), progress: Double(count))
         }
 
     private func setupLayout () {
@@ -72,10 +76,9 @@ class ViewController: UIViewController {
                 playButton.heightAnchor.constraint(equalToConstant: 150),
                 playButton.widthAnchor.constraint(equalToConstant: 150),
 
-                progressBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                progressBar.bottomAnchor.constraint(equalTo: timeLabel.topAnchor, constant: -20),
-                progressBar.heightAnchor.constraint(equalToConstant: 150),
-                progressBar.widthAnchor.constraint(equalToConstant: 150)
+                progressBar.topAnchor.constraint(equalTo: timeLabel.topAnchor, constant: -70),
+                progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+                progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
             ])
         }
 
@@ -98,24 +101,28 @@ class ViewController: UIViewController {
 
         if count > 0 && isWorkTime {
             count = count - 1
+            configurWork(with: 25.0, progress: Double(count))
             let timeString = makeTimeString(seconds: count)
             timeLabel.text = timeString
             timeLabel.textColor = .systemRed
             playButton.tintColor = .systemRed
         } else if count > 0 && !isWorkTime {
             count = count - 1
+            configurRelax(with: 5.0, progress: Double(count))
             let timeString = makeTimeString(seconds: count)
             timeLabel.text = timeString
             timeLabel.textColor = .systemMint
             playButton.tintColor = .systemMint
         } else if isWorkTime {
             count = 5
+            configurRelax(with: Double(count), progress: Double(count))
             timeLabel.text = "5 : 00"
             timeLabel.textColor = .systemMint
             playButton.tintColor = .systemMint
             isWorkTime = false
         } else {
             count = 25
+            configurWork(with: Double(count), progress: Double(count))
             timeLabel.text = "25 : 00"
             timeLabel.textColor = .systemRed
             playButton.tintColor = .systemRed
@@ -136,6 +143,24 @@ class ViewController: UIViewController {
 
     private func changeImageButtonToPause() {
         playButton.setImage(UIImage(systemName: "pause", withConfiguration: UIImage.SymbolConfiguration(pointSize: 50, weight: .medium, scale: .default)), for: .normal)
+    }
+
+    private func configurWork(with duration: Double, progress: Double) {
+        timerDuration = duration
+
+        let tempCurrentValue = progress > duration ? duration : progress
+        let goalValueDevider = duration == 0 ? 1 : duration
+        let percent = tempCurrentValue / goalValueDevider
+        progressBar.drawPrograssWork(with: CGFloat(percent))
+    }
+
+    private func configurRelax(with duration: Double, progress: Double) {
+        timerDuration = duration
+
+        let tempCurrentValue = progress > duration ? duration : progress
+        let goalValueDevider = duration == 0 ? 1 : duration
+        let percent = tempCurrentValue / goalValueDevider
+        progressBar.drawPrograssRelax(with: CGFloat(percent))
     }
 }
 

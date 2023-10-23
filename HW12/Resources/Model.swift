@@ -12,5 +12,3 @@ enum Button: String {
     case pause
 }
 
-enum Color: 
-

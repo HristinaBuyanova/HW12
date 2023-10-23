@@ -70,8 +70,8 @@
 			isa = PBXGroup;
 			children = (
 				6E92D7F82AE3F1FF00A6110E /* ViewController.swift */,
-				6E92D80A2AE3F3DE00A6110E /* App */,
 				6E93CCCF2AE6DAF4007CD1BF /* ProgressView.swift */,
+				6E92D80A2AE3F3DE00A6110E /* App */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
